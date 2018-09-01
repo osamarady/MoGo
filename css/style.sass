@@ -1,0 +1,547 @@
+// Variables
+$redColor: #f38181
+$yellowColor: #fce38a
+$greenColor: #95e1d3
+$whiteColor: #fff
+$grayColor: #b6b4b4
+$mainFont: 'Montserrat', sans-serif
+$mainFontBold: 'Montserrat black', sans-serif
+$secondFont: 'Kaushan Script', cursive
+
+// mixins
+@mixin transition ($prop, $time, $style)
+    -webkit-transition: $prop $time $style
+    -o-transition: $prop $time $style
+    transition: $prop $time $style
+
+@mixin animator ($name, $time, $style, $duration)
+    -webkit-animation: $name $time $style $duration forwards
+    -moz-animation: $name $time $style $duration forwards
+    -o-animation: $name $time $style $duration forwards
+    animation: $name $time $style $duration forwards
+    
+@mixin keyframes ($keyName)
+    @-webkit-keyframes #{$keyName}
+        @content
+    @-moz-keyframes #{$keyName}
+        @content
+    @-o-keyframes #{$keyName}
+        @content
+    @keyframes #{$keyName}
+        @content
+    
+//Global Styls
+button, a, input
+    &:focus
+        outline: 0
+
+body, html
+    font-family: $mainFont
+    overflow-x: hidden
+    position: relative
+
+.second-font
+    font-family: $secondFont
+    
+.black-Font
+    font-family: $mainFontBold
+
+.heading-style
+    position: relative
+    margin-bottom: 50px
+    &:after
+        content: ""
+        height: 2px
+        width: 50px
+        position: absolute
+        left: 50%
+        bottom: -20px
+        background-color: $redColor
+        margin-left: -25px
+.margin-bottom-section
+    margin-bottom: 100px
+.silver-color
+    color: #b6b4b4
+// Placeholders
+%bg-img 
+    -webkit-background-size: cover
+    -moz-background-size: cover
+    -ms-background-size: cover
+    background-size: cover
+    -webkit-background-position: center
+    -moz-background-position: center
+    background-position: center
+%bg-gradient
+    background: #f38181
+    background: -webkit-linear-gradient(to bottom, rgba(243, 129, 129, .8), rgba(252, 227, 138, .8))
+    background: linear-gradient(to bottom, rgba(243, 129, 129, .8), rgba(252, 227, 138, .8))
+/* Start Header */
+.header
+    @extend %bg-img
+    background-image: url("../images/1.png")
+    @include transition(all, 2s, ease-in-out)
+    @include animator (animatedBackground, 10s, linear, infinite)
+    .header-overlay
+        @extend %bg-gradient
+        position: relative
+@include keyframes (animatedBackground)
+    0%
+        background-position: 0% 0%
+    50%
+        background-position: 0% 25%
+    100%
+        background-position: 0% 0%
+.navbar-dark .navbar-nav .nav-link
+    color: $whiteColor
+        
+.navbar-brand
+    font-size: 25px
+
+.active
+    a
+        color: $yellowColor !important
+        font-weight: bold
+        position: relative
+        &:after
+            content: ""
+            background-color: $yellowColor
+            height: 2px
+            width: 80%
+            position: absolute
+            bottom: 0px
+            left: 0
+            margin-left: 10%
+            @include animator (after, 1s, ease, 1)
+            transform-origin: center
+
+@include keyframes (after)
+    from
+        transform: scaleX(0)
+    to
+        transform: scaleX(1)
+.nav-item
+    margin-left: 20px
+    cursor: pointer
+
+.content
+    display: flex
+    align-items: center
+    justify-content: center
+    h2
+        font-size: 3em
+    h1
+        font-size: 5em
+        position: relative
+        &:after
+            content: ""
+            width: 50px
+            height: 3px
+            background-color: $whiteColor
+            position: absolute
+            bottom: -10px
+            left: 50%
+            margin-left: -25px
+    button
+        background-color: transparent
+        color: $whiteColor
+        border: 2px solid $whiteColor
+        padding: 3px 15px
+        margin: 25px
+        position: relative
+        z-index: 1
+        @include transition (all, 1s, ease-in-out)
+        cursor: pointer
+        &:after
+            content: ""
+            background-color: $whiteColor
+            width: 100%
+            height: 100%
+            position: absolute
+            top: 0
+            left: 0
+            z-index: -1
+            transform: scaleX(0)
+            transform-origin: left
+            @include transition (all, 1s, ease-in-out)
+        &:hover
+            color: $redColor
+            font-weight: bold
+            &:after
+                transform: scaleX(1)
+
+@media (max-width: 480px), (max-height: 480px)
+    .content
+        h2
+            font-size: 1.5em
+        h1
+            font-size: 2.5em
+    .active
+        a
+            &:after
+                width: 0%
+                
+.slide-item
+    background-color: rgba(255, 255, 255, .3)
+    width: 100%
+    height: 2px
+
+.search-bar
+    width: 100%
+    height: 100%
+    background-color: rgba(0, 0, 0, .5)
+    position: absolute
+    top: 0
+    left: 0
+    display: none
+    z-index: 2
+    color: $whiteColor
+    position: fixed
+    div
+        width: 100%
+        height: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+        .fa-search
+            margin-right: 10px
+        .fa-times
+            position: absolute
+            top: 20px
+            left: 20px
+            cursor: pointer
+        input
+            background-color: transparent
+            border: 0
+            color: #fff
+            height: 50px
+            &::placeholder
+                color: #fff
+            
+.slide-active
+    background-color: $whiteColor
+    position: relative
+    @include transition(all, 1s, ease-in-out)
+    &:after
+        content: ""
+        position: absolute
+        top: 0
+        left: 0
+        background-color: $redColor
+        height: 100%
+        @include animator (move, 10s, ease-in-out, 1)
+
+@include keyframes (move)
+    from
+        width: 0
+    to
+        width: 100%
+/* ./End Header */
+
+/* Start About */
+.stories
+    .custom-grid
+        background-color: $greenColor
+        margin-left: 15px
+        margin-right: 15px
+        padding: 0
+        .overlay-container
+            position: relative
+            @include transition (all, .5s, ease-in-out)
+            &:hover
+                .img-hover
+                    display: block
+                    opacity: 1
+                transform: translate(-15px, -15px)
+            .img-hover
+                @extend %bg-gradient
+                margin: 0
+                position: absolute
+                top: 0
+                width: 100%
+                height: 100%
+                color: $whiteColor
+                padding-top: 25%
+                opacity: 0
+                @include transition (all, .5s, ease-in-out)
+        
+@media (min-width: 768px)
+    .stories
+        .custom-grid
+            -webkit-box-flex: 0
+            -ms-flex: 0 0 30.333333%
+            flex: 0 0 30.333333%
+            max-width: 30.33333%
+            padding: 0
+
+/* ./End About */
+/* Start our Numbers */
+.numbers
+    background-color: $greenColor
+    .col
+        border-right: 1px solid #c4e9e2
+        &:first-child
+            border-left: 1px solid #c4e9e2
+        p
+            margin: 0
+/* ./End our Numbers */
+
+/* Start Our Services */
+.services
+    i
+        color: $greenColor
+/* ./End Our Services */
+
+/* start Unique */
+.unDesign
+    background-image: url("../images/app-wallpaper.png")
+    @extend %bg-img
+    position: relative
+    .white-overlay
+        background-color: rgba(255, 255, 255, .7)
+    .appLarg
+        width: 300px
+    .appSmall
+        width: 150px
+        position: absolute
+        bottom: -30px
+        left: 55%
+
+.tap
+    text-align: left
+    border: 1px solid #eee
+    margin-bottom: 15px
+    div
+        border-bottom: 1px solid #eee
+        padding: 10px 15px
+        .fa-image, .fa-star, .fa-bullseye
+            color: $greenColor
+    .tap-toggle
+        cursor: pointer
+        p
+            margin: 0
+    .hidden
+        display: none
+        i
+            @include transition (all, 1s, ease-in-out)
+    .tap-data
+        height: 120px
+        overflow: overlay
+/* ./End Unique */
+            
+/* Start Quotes */
+.messages
+    background-color: #F8F8F8
+    .owl-carousel
+        position: relative
+        .item
+            padding: 0 25px
+            .message
+                color: $greenColor
+                border: 3px solid $greenColor
+                display: flex
+                justify-content: center
+                align-items: center
+            .quote-writer
+                position: relative
+                padding-left: 50px
+                margin-top: 10px
+                &:after
+                    content: ""
+                    background-color: #f38181
+                    width: 40px
+                    height: 2px
+                    position: absolute
+                    top: 12px
+                    left: 0
+        .owl-prev, .owl-next
+            display: inline-block
+            color: #ccc
+        .owl-prev
+            position: absolute
+            top: 50%
+            left: 0
+        .owl-next
+            position: absolute
+            top: 50%
+            right: 0
+/* ./End Quotes */
+/* Start Team */
+.team-social
+    display: inline-block
+    color: $redColor
+    background-color: $yellowColor
+    a
+        color: $redColor
+        i
+            background-color: $yellowColor
+            padding: 10px
+            @include transition (all, 1s, ease-in-out)
+            margin: 0
+            &:hover
+                background-color: $redColor
+                color: $whiteColor
+.team
+    .img-hover
+        display: flex !important
+        justify-content: center
+        align-items: center
+        padding: 0 !important
+    
+/* ./End Team */
+
+/* Start portfolio */
+.portfolio
+    .img-cont
+        position: relative
+        padding: 0
+        .img-hover
+            position: absolute
+            top: 0
+            left: 0
+            right: 0
+            bottom: 0
+            width: 100%
+            height: 100%
+            @extend %bg-gradient
+            display: flex !important
+            justify-content: center
+            align-items: center
+            padding: 0 !important
+            color: $whiteColor
+            @include transition (all, 1s, ease-in-out)
+            opacity: 0
+        &:hover
+            .img-hover
+                opacity: 1
+        img
+            width: 100%
+/* ./End portfolio */
+
+/* Start testimonial */
+.testimonial
+    .owl-carousel
+        position: relative
+        .item
+            padding: 0 25px
+            .message
+                display: flex
+                justify-content: center
+                align-items: center
+            .quote-writer
+                position: relative
+                padding-left: 50px
+                margin-top: 10px
+                &:after
+                    content: ""
+                    background-color: #f38181
+                    width: 40px
+                    height: 2px
+                    position: absolute
+                    top: 12px
+                    left: 0
+        .owl-prev, .owl-next
+            display: inline-block
+            color: #ccc
+        .owl-prev
+            position: absolute
+            top: 50%
+            left: 0
+        .owl-next
+            position: absolute
+            top: 50%
+            right: 0
+/* ./End testimonial */
+
+/* Happy Clients */
+.happy-clients
+    @extend %bg-img
+    background-image: url("../images/testimonial-wallpaper.png")
+    .overlay
+        background-color: rgba(255, 255, 255, .7)
+        h6
+            position: relative
+            margin-bottom: 30px
+            &:after
+                content: ""
+                height: 2px
+                background-color: #f66
+                width: 20%
+                position: absolute
+                top: 30px
+                left: 0
+        p
+            color: #5f5f5f
+/* ./Happy Clients */
+
+/* Start Blog*/
+.blog
+    .card
+        border: 0 
+        position: relative
+        .card-title
+            a
+                text-decoration: none
+                color: #000
+        .blog-date
+            background-color: $greenColor
+            width: 50px
+            color: $whiteColor
+            position: absolute
+            top: 30%
+            left: -10px
+            padding: 5px 0
+        i
+            color: $greenColor
+        p
+            margin: 0
+/* ./End Blog */
+/* Start Map*/
+.map
+    @extend %bg-img
+    background-image: url("../images/map.png")
+    color: $redColor
+    .overlay
+        background-color: rgba(255, 255, 255, .7)
+        h3
+            cursor: pointer
+/* ./End Map*/
+/* Start Footer */
+.footer
+    background-color: #F8F8F8
+    .social
+        i
+            margin-left: 5px
+            color: $greenColor
+    input
+        border: 1px solid #eee
+        padding: 5px 7px
+    button
+        background-color: $greenColor
+        border: 0
+        color: $whiteColor
+        margin-left: -5px
+        padding: 5px 10px
+        cursor: pointer
+    .instagram
+        .col-4
+            padding: 1px
+    footer
+        a
+            color: $redColor
+            text-decoration: none
+/* ./End Footer */
+.scrollUp
+    background-color: $greenColor
+    color: $whiteColor
+    border: 0
+    border-radius: 3px
+    padding: 5px 10px
+    position: fixed
+    bottom: 20px
+    right: 20px
+    cursor: pointer
+    opacity: .5
+    @include transition (all, .5s, ease-in-out)
+    display: none
+    &:hover
+        opacity: 1
